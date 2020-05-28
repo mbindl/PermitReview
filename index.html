@@ -349,6 +349,14 @@
                   label: "Existing Land Use"
                 },
                 {
+                  fieldName: "COUNTY_LANDUSE_DESCRIPTION",
+                  label: "County Land Use"
+                },
+                {
+                  fieldName: 'REGIONAL_LANDUSE',
+                  label: "Regional Land Use"
+                },
+                {
                   fieldName: "OWN_FULL",
                   label: "Owner Name"
                 },
@@ -358,8 +366,44 @@
                   },
                 {
                   fieldName: "ZONING_DESCRIPTION",
-                  label: "Zoning",
+                  label: "Zoning District",
                   },
+                {
+                  fieldName: 'PLAN_NAME',
+                  label: "Local Plan"
+                },
+                {
+                  fieldName: 'TOWN_CENTER',
+                  label: "Town Center"
+                },
+                {
+                  fieldName: 'LOCATION_TO_TOWNCENTER',
+                  label: "Proximity to Town Center"
+                },
+                {
+                  fieldName: 'ALLOWABLE_COVERAGE_BAILEY_SQFT',
+                  label: "Estimated Allowable Coverage (sq.ft., Bailey)",
+                  format: {
+                    digitSeparator: true,
+                    places: 2
+                  },
+                },
+                {
+                  fieldName: 'IMPERVIOUS_SURFACE_SQFT',
+                  label: "Estimated Impervious Coverage (sq.ft, LiDAR)",
+                  format: {
+                    digitSeparator: true,
+                    places: 2
+                  },
+                },
+                {
+                  fieldName: "PARCEL_SQFT",
+                  label: "Square Feet",
+                  format: {
+                    digitSeparator: true,
+                    places: 2
+                  },
+                },
                 {
                   fieldName: "PARCEL_ACRES",
                   label: "Acres",
@@ -388,7 +432,7 @@
         // construct parcel land use layer from portal item
         const parcels = new FeatureLayer({
           portalItem: {
-            id: "1cd178998be440c2852f2a406fbede6a"
+            id: "a4cd3956090440b9b967be746f53bbf7"
           },
           title: "Parcels",
           outFields: ["*"],
@@ -561,8 +605,12 @@
                 container: document.createElement("div"),
                 view: view,
                 // specify print service url
-               printServiceURL: "https://maps.trpa.org/server/rest/services/TRPA_Portrait_PrintService/GPServer/Export%20Web%20Map"
+               printServiceURL: 
+                "https://maps.trpa.org/server/rest/services/TRPA_Portrait_PrintService/GPServer/Export%20Web%20Map"
+//               "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task" 
+//                "https://maps.trpa.org/server/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task"
 //                printServiceUrl:"https://utility.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task"
+//                "https://maps.trpa.org/server/rest/services/TRPA_Portrait_PrintService/GPServer/Export%20Web%20Map"
         });
 
         // Create Print Button
@@ -855,6 +903,7 @@
           
         // add leged exapnd to ui
         view.ui.add(legend, "top-right");
+               
      // Create the zoning layer
         const zoningLayer = new FeatureLayer({
             url:
@@ -935,6 +984,7 @@
                 highlight = layerView.highlight(objectIds);
               });
 
+              
               // Query the table for the related features for the features ids found
               return zoningLayer.queryRelatedFeatures({
                 outFields: ["Category", "Use_Type", "Density", "Unit", "Notes"],
